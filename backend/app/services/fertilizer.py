@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from ..domain.metrics import STAGE_LABELS, Metric, Stage
+from ..domain.metrics import LEAF_LABELS, ROOT_LABELS, STAGE_LABELS, LeafStatus, Metric, RootStatus, Stage
 from ..models import CareEvent, Fertilizer, FertilizerApplication, Plant
 from ..providers.registry import provider_for
 from ..schemas import ApplicationOut, Assessment, FertilizerIn, FertilizerOut, PlannedTask
@@ -50,7 +50,8 @@ def assess(db: Session, plant: Plant, fert: Fertilizer, stage: str | None = None
     ctype = composition_type(fert)
 
     used.append(f"Стадия: {STAGE_LABELS[Stage(stage)]}")
-    used.append(f"Корни: {plant.root_status}, листья: {plant.leaf_status}"
+    used.append(f"Корни: {ROOT_LABELS[RootStatus(plant.root_status)].split(':')[0].lower()}, "
+                f"листья: {LEAF_LABELS[LeafStatus(plant.leaf_status)].split(',')[0].lower()}"
                 + (f" (осмотр {plant.observed_at:%d.%m.%Y})" if plant.observed_at else " (осмотров не было)"))
 
     # 1. Состав
