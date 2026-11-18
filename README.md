@@ -10,13 +10,18 @@ Full Stack MVP для мониторинга, прогнозирования и 
 
 ## Быстрый старт
 
-Нужны Python 3.11+ и Node.js 18+.
+Нужны **Python 3.11+** (рекомендуется 3.12) и Node.js 18+.
+
+> ⚠️ На macOS системный `python3` — это часто Python 3.9, и с ним бэкенд не запустится
+> (`TypeError: unsupported operand type(s) for |`). Проверьте версию: `python3 --version`.
+> Установка: macOS — `brew install python@3.12`, Windows — установщик с python.org, Ubuntu — `sudo apt install python3.12 python3.12-venv`.
+> Затем создавайте окружение командой `python3.12 -m venv .venv`.
 
 **Backend** (терминал 1):
 
 ```bash
 cd backend
-python3 -m venv .venv && source .venv/bin/activate
+python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env          # по желанию: ANTHROPIC_API_KEY для режима Claude
 uvicorn app.main:app --reload --port 8000
