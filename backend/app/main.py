@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from .api import ai, plants, sensors, system
+from .api import ai, plants, sensors, spy, system
 from .config import get_settings
 from .database import Base, SessionLocal, engine
 from .seed import seed_demo
@@ -47,7 +47,7 @@ async def validation(_: Request, exc: RequestValidationError):
                                                   "errors": errors})
 
 
-for r in (plants.router, ai.router, sensors.router, system.router):
+for r in (plants.router, ai.router, sensors.router, spy.router, system.router):
     app.include_router(r)
 
 settings.upload_dir.mkdir(parents=True, exist_ok=True)

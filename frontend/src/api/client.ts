@@ -46,4 +46,14 @@ export const api = {
   dashboard: () => get<T.DashboardSummary>('/api/dashboard/summary'),
   system: () => get<T.SystemStatus>('/api/system/status'),
   resetDemo: () => post<{ status: string }>('/api/system/reset-demo'),
+  // Botanical Spy
+  spyInvestigate: (opts: { file?: File | null; plantId?: number | null; usePlantPhoto?: boolean }) => {
+    const fd = new FormData();
+    if (opts.file) fd.append('file', opts.file);
+    if (opts.plantId) fd.append('plant_id', String(opts.plantId));
+    if (opts.usePlantPhoto) fd.append('use_plant_photo', 'true');
+    return http.post<T.SpyInvestigation>('/api/spy/investigations', fd, { timeout: 240_000 }).then((r) => r.data);
+  },
+  spyHistory: (plantId?: number) => get<T.SpyBrief[]>('/api/spy/investigations', plantId ? { plant_id: plantId } : undefined),
+  spyGet: (id: number) => get<T.SpyInvestigation>(`/api/spy/investigations/${id}`),
 };

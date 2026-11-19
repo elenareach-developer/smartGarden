@@ -162,3 +162,22 @@ class AIConsultation(Base):
     model: Mapped[str | None] = mapped_column(String(60))
     context_snapshot: Mapped[dict] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
+
+
+class SpyInvestigation(Base):
+    """Botanical Spy: расследование по фотографии. Растение необязательно (фото может быть «чужим»)."""
+
+    __tablename__ = "spy_investigations"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    plant_id: Mapped[int | None] = mapped_column(ForeignKey("plants.id", ondelete="SET NULL"), index=True)
+    photo_url: Mapped[str | None] = mapped_column(String(500))
+    photo_source: Mapped[str] = mapped_column(String(20))   # upload | collection | illustration | none
+    codename: Mapped[str] = mapped_column(String(160))
+    mode: Mapped[str] = mapped_column(String(10))           # demo | claude
+    model: Mapped[str | None] = mapped_column(String(60))
+    result: Mapped[dict] = mapped_column(JSON)              # досье: факты, гипотезы, неизвестное
+    crosscheck: Mapped[list] = mapped_column(JSON)          # сверка с реальными датчиками
+    image_stats: Mapped[dict | None] = mapped_column(JSON)  # измерения по пикселям
+    context_snapshot: Mapped[dict | None] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow, index=True)

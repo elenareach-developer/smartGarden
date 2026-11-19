@@ -10,6 +10,7 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import MenuIcon from '@mui/icons-material/Menu';
 import { usePlants } from '../context/PlantContext';
 
@@ -23,6 +24,7 @@ export function useNavItems() {
     { key: 'monitoring', label: 'Monitoring', ru: 'Мониторинг', short: 'Мониторинг', to: `/monitoring${sel}`, icon: <MonitorHeartOutlinedIcon />, match: (p: string) => p.startsWith('/monitoring') },
     { key: 'forecast', label: 'Forecast', ru: 'Прогноз', short: 'Прогноз', to: `/forecast${sel}`, icon: <QueryStatsIcon />, match: (p: string) => p.startsWith('/forecast') },
     { key: 'assistant', label: 'AI Assistant', ru: 'AI-помощник', short: 'AI', to: `/assistant${sel}`, icon: <AutoAwesomeOutlinedIcon />, match: (p: string) => p.startsWith('/assistant') },
+    { key: 'spy', label: 'Botanical Spy', ru: 'Ботаническая разведка', short: 'Разведка', to: '/spy', icon: <TravelExploreIcon />, match: (p: string) => p.startsWith('/spy') },
     { key: 'calendar', label: 'Care Calendar', ru: 'Календарь ухода', short: 'Календарь', to: '/calendar', icon: <CalendarMonthOutlinedIcon />, match: (p: string) => p.startsWith('/calendar') },
     { key: 'settings', label: 'Settings', ru: 'Настройки', short: 'Настройки', to: '/settings', icon: <SettingsOutlinedIcon />, match: (p: string) => p.startsWith('/settings') },
   ];

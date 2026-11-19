@@ -531,3 +531,99 @@ class DashboardOut(BaseModel):
     plants: list[DashboardPlant]
     upcoming: list[dict]
     recent_events: list[dict]
+
+
+# ---------- Botanical Spy ----------
+
+SpyConfidence = Literal["высокая", "средняя", "низкая"]
+SpyDirection = Literal["climate", "scene", "biology", "owner"]
+SpyFactSource = Literal["photo", "pixel_stats", "profile", "sensor", "observation", "care_history", "knowledge"]
+
+
+class SpyFact(BaseModel):
+    text: str
+    source: SpyFactSource
+
+
+class SpyHypothesis(BaseModel):
+    text: str
+    confidence: SpyConfidence
+    evidence: list[str]
+    how_to_verify: str
+
+
+class SpySensorTip(BaseModel):
+    sensor: str
+    purpose: str
+
+
+class SpySection(BaseModel):
+    direction: SpyDirection
+    title: str
+    facts: list[SpyFact]
+    hypotheses: list[SpyHypothesis]
+    unknowns: list[str]
+    data_needed: list[str]
+    sensors: list[SpySensorTip]
+
+
+class SpyIdentification(BaseModel):
+    name: str
+    confidence: SpyConfidence
+    basis: str
+
+
+class SpyVisualEstimates(BaseModel):
+    light_level: Literal["low", "medium", "high", "unknown"]
+    humidity_level: Literal["low", "medium", "high", "unknown"]
+    setting: Literal["indoor", "outdoor", "greenhouse", "unknown"]
+
+
+class SpyResult(BaseModel):
+    codename: str
+    summary: str
+    identification: SpyIdentification
+    sections: list[SpySection]
+    clues: list[str]
+    to_check: list[str]
+    visual_estimates: SpyVisualEstimates
+    photo_note: str
+
+
+class SpyCrosscheck(BaseModel):
+    metric: str
+    label: str
+    visual: str
+    measured: str | None
+    measured_at: datetime | None
+    source: str | None
+    verdict: Literal["consistent", "contradicts", "no_data"]
+    note: str
+
+
+class SpyInvestigationOut(BaseModel):
+    id: int
+    plant_id: int | None
+    plant_name: str | None
+    photo_url: str | None
+    photo_source: Literal["upload", "collection", "illustration", "none"]
+    codename: str
+    mode: Literal["demo", "claude"]
+    model: str | None
+    result: SpyResult
+    crosscheck: list[SpyCrosscheck]
+    image_stats: dict | None
+    warnings: list[str] = []
+    created_at: datetime
+
+
+class SpyInvestigationBrief(BaseModel):
+    id: int
+    plant_id: int | None
+    plant_name: str | None
+    photo_url: str | None
+    photo_source: str
+    codename: str
+    summary: str
+    mode: str
+    created_at: datetime

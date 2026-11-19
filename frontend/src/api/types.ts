@@ -147,3 +147,33 @@ export interface SystemStatus {
   app: string; database: string; ai_mode: 'demo' | 'claude'; ai_configured_mode: string; claude_model: string;
   api_key_configured: boolean; plants: number; readings_by_source: Record<string, number>; providers: string[];
 }
+
+// ---------- Botanical Spy ----------
+export type SpyConfidence = 'высокая' | 'средняя' | 'низкая';
+export type SpyDirection = 'climate' | 'scene' | 'biology' | 'owner';
+export type SpyFactSource = 'photo' | 'pixel_stats' | 'profile' | 'sensor' | 'observation' | 'care_history' | 'knowledge';
+export interface SpyFact { text: string; source: SpyFactSource }
+export interface SpyHypothesis { text: string; confidence: SpyConfidence; evidence: string[]; how_to_verify: string }
+export interface SpySection {
+  direction: SpyDirection; title: string; facts: SpyFact[]; hypotheses: SpyHypothesis[];
+  unknowns: string[]; data_needed: string[]; sensors: { sensor: string; purpose: string }[];
+}
+export interface SpyResult {
+  codename: string; summary: string; identification: { name: string; confidence: SpyConfidence; basis: string };
+  sections: SpySection[]; clues: string[]; to_check: string[];
+  visual_estimates: { light_level: string; humidity_level: string; setting: string }; photo_note: string;
+}
+export interface SpyCrosscheck {
+  metric: string; label: string; visual: string; measured: string | null; measured_at: string | null;
+  source: string | null; verdict: 'consistent' | 'contradicts' | 'no_data'; note: string;
+}
+export interface SpyInvestigation {
+  id: number; plant_id: number | null; plant_name: string | null; photo_url: string | null;
+  photo_source: 'upload' | 'collection' | 'illustration' | 'none'; codename: string; mode: 'demo' | 'claude';
+  model: string | null; result: SpyResult; crosscheck: SpyCrosscheck[]; image_stats: Record<string, unknown> | null;
+  warnings: string[]; created_at: string;
+}
+export interface SpyBrief {
+  id: number; plant_id: number | null; plant_name: string | null; photo_url: string | null; photo_source: string;
+  codename: string; summary: string; mode: string; created_at: string;
+}
