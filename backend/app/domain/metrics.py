@@ -46,6 +46,7 @@ class ReadingQuality(str, Enum):
 
 
 class SensorType(str, Enum):
+    DHT11 = "DHT11"
     DHT22 = "DHT22"
     SHT31 = "SHT31"
     BH1750 = "BH1750"
@@ -57,6 +58,7 @@ class SensorType(str, Enum):
 
 
 SENSOR_METRICS: dict[SensorType, list[Metric]] = {
+    SensorType.DHT11: [Metric.temperature, Metric.air_humidity],
     SensorType.DHT22: [Metric.temperature, Metric.air_humidity],
     SensorType.SHT31: [Metric.temperature, Metric.air_humidity],
     SensorType.BH1750: [Metric.light],

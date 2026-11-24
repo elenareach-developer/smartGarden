@@ -12,7 +12,7 @@ import { PageHeader } from '../components/PageHeader';
 import { ErrorBox, Loading } from '../components/States';
 
 const SENSOR_TYPES = [
-  ['SHT31', 'SHT31 — температура и влажность'], ['DHT22', 'DHT22 — температура и влажность'],
+  ['SHT31', 'SHT31 — температура и влажность'], ['DHT11', 'DHT11 — температура и влажность'], ['DHT22', 'DHT22 — температура и влажность'],
   ['BH1750', 'BH1750 — освещённость'], ['HX711', 'HX711 — весы (масса горшка)'],
   ['CAPACITIVE_SOIL', 'Ёмкостный датчик влажности субстрата'],
 ];
@@ -21,9 +21,9 @@ const ESP32_EXAMPLE = `POST /api/sensors/readings
 {
   "readings": [
     {"plant_id": 1, "metric": "temperature", "value": 22.8,
-     "source": "iot", "hardware_id": "esp32-24:6f:28:aa-sht31"},
+     "source": "iot", "hardware_id": "esp32-orchid-dht11"},
     {"plant_id": 1, "metric": "air_humidity", "value": 58,
-     "source": "iot", "hardware_id": "esp32-24:6f:28:aa-sht31"}
+     "source": "iot", "hardware_id": "esp32-orchid-dht11"}
   ]
 }`;
 
